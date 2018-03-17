@@ -1,8 +1,13 @@
 <resources>
-	<string name="app_name">SymplFlashCards</string>
+	<string name="app_name">Sympl Flash Cards</string>
 
 	<string name="navigation_drawer_open">Open navigation drawer</string>
 	<string name="navigation_drawer_close">Close navigation drawer</string>
 
 	<string name="action_settings">Settings</string>
+
+	<plurals name="amount_flashcards">
+		<item quantity="one">%d flashcard</item>
+		<item quantity="other">%d flashcards</item>
+	</plurals>
 </resources>
