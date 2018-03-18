@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ListView
@@ -16,21 +17,22 @@ import com.georgistephanov.android.symplflashcards.ui.newdeck.NewDeckActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import org.jetbrains.anko.find
-import org.jetbrains.anko.startActivity
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private val mainViewModel: MainViewModel by lazy { ViewModelProviders.of(this).get(MainViewModel::class.java) }
+    private val model: MainViewModel by lazy { ViewModelProviders.of(this).get(MainViewModel::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        toolbar.title = resources.getString(R.string.app_name)
+
         fab.setOnClickListener { view ->
             startActivity(Intent(this, NewDeckActivity::class.java))
         }
 
-        mainViewModel.flashCardStacks.observe(this, Observer<List<MainListRow>> {
+        model.flashCardStacks.observe(this, Observer<List<MainListRow>> {
             it?.let {
                 find<ListView>(R.id.main_list).adapter = MainListAdapter(this, it)
             }

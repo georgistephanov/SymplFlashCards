@@ -20,9 +20,11 @@ open class BaseActivity : AppCompatActivity() {
                 .build()
     }
 
+    val toolbar by lazy { find<Toolbar>(R.id.toolbar) }
+
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
-        setSupportActionBar(find<Toolbar>(R.id.toolbar))
+        setSupportActionBar(toolbar)
 
         activityComponent.inject(this)
     }
