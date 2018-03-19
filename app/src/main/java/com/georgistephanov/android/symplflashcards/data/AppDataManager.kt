@@ -1,13 +1,18 @@
 package com.georgistephanov.android.symplflashcards.data
 
+import android.arch.lifecycle.LiveData
 import com.georgistephanov.android.symplflashcards.data.room.DbHelper
 import com.georgistephanov.android.symplflashcards.data.room.entities.Deck
+import com.georgistephanov.android.symplflashcards.data.room.entities.DeckAndCards
 import com.georgistephanov.android.symplflashcards.data.room.entities.FlashCard
 import javax.inject.Inject
 
 class AppDataManager @Inject constructor(private val appDbHelper: DbHelper) : DataManager {
 
-    override fun getFlashCard(id: Int): FlashCard = appDbHelper.getFlashCard(id)
+    override fun getFlashCard(id: Int): FlashCard? = appDbHelper.getFlashCard(id)
+
+    override fun getAllFlashCardsFromDeck(deckName: String): List<FlashCard>
+            = appDbHelper.getAllFlashCardsFromDeck(deckName)
 
     override fun insertFlashCard(flashCard: FlashCard) {
         appDbHelper.insertFlashCard(flashCard)
@@ -21,7 +26,9 @@ class AppDataManager @Inject constructor(private val appDbHelper: DbHelper) : Da
         appDbHelper.deleteFlashCard(id)
     }
 
-    override fun getDeck(id: Int): Deck = appDbHelper.getDeck(id)
+    override fun getAllDecks(): LiveData<List<DeckAndCards>> = appDbHelper.getAllDecks()
+
+    override fun getDeck(name: String): DeckAndCards? = appDbHelper.getDeck(name)
 
     override fun insertDeck(deck: Deck) {
         appDbHelper.insertDeck(deck)
@@ -31,8 +38,8 @@ class AppDataManager @Inject constructor(private val appDbHelper: DbHelper) : Da
         appDbHelper.deleteDeck(deck)
     }
 
-    override fun deleteDeck(id: Int) {
-        appDbHelper.deleteDeck(id)
+    override fun deleteDeck(name: String) {
+        appDbHelper.deleteDeck(name)
     }
 
 }

@@ -7,11 +7,13 @@ import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ListView
+import com.georgistephanov.android.symplflashcards.App
 import com.georgistephanov.android.symplflashcards.R
+import com.georgistephanov.android.symplflashcards.data.room.entities.Deck
+import com.georgistephanov.android.symplflashcards.data.room.entities.DeckAndCards
 import com.georgistephanov.android.symplflashcards.ui.base.BaseActivity
 import com.georgistephanov.android.symplflashcards.ui.newdeck.NewDeckActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -20,7 +22,9 @@ import org.jetbrains.anko.find
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private val model: MainViewModel by lazy { ViewModelProviders.of(this).get(MainViewModel::class.java) }
+    private val model: MainViewModel by lazy { ViewModelProviders.of(this, (application as App).viewModelFactory).get(MainViewModel::class.java) }
+
+    private val mainListView by lazy { find<ListView>(R.id.main_list) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +36,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             startActivity(Intent(this, NewDeckActivity::class.java))
         }
 
-        model.flashCardStacks.observe(this, Observer<List<MainListRow>> {
+        model.decks.observe(this, Observer<List<DeckAndCards>> {
             it?.let {
-                find<ListView>(R.id.main_list).adapter = MainListAdapter(this, it)
+                mainListView.adapter = MainListAdapter(this, it)
             }
         })
 

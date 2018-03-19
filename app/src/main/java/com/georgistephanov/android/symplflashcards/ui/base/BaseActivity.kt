@@ -1,5 +1,6 @@
 package com.georgistephanov.android.symplflashcards.ui.base
 
+import android.arch.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
@@ -10,6 +11,7 @@ import com.georgistephanov.android.symplflashcards.di.component.ActivityComponen
 import com.georgistephanov.android.symplflashcards.di.component.DaggerActivityComponent
 import com.georgistephanov.android.symplflashcards.di.module.ActivityModule
 import org.jetbrains.anko.find
+import javax.inject.Inject
 
 open class BaseActivity : AppCompatActivity() {
 

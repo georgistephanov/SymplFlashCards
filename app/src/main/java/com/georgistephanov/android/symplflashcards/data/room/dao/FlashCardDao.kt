@@ -10,7 +10,10 @@ import com.georgistephanov.android.symplflashcards.data.room.entities.FlashCard
 interface FlashCardDao {
 
     @Query("SELECT * FROM FlashCard WHERE _id = :flashCardId")
-    fun getFlashCard(flashCardId: Int) : FlashCard
+    fun getFlashCard(flashCardId: Int) : FlashCard?
+
+    @Query("SELECT * FROM FlashCard WHERE deck_name=:deckName")
+    fun getAllFlashCardsFromDeck(deckName: String) : List<FlashCard>
 
     @Insert
     fun insert(flashCard: FlashCard)

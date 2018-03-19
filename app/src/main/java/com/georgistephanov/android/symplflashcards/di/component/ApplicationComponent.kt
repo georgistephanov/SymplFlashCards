@@ -6,11 +6,12 @@ import com.georgistephanov.android.symplflashcards.App
 import com.georgistephanov.android.symplflashcards.data.DataManager
 import com.georgistephanov.android.symplflashcards.di.ApplicationContext
 import com.georgistephanov.android.symplflashcards.di.module.ApplicationModule
+import com.georgistephanov.android.symplflashcards.di.module.ViewModelModule
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [ApplicationModule::class])
+@Component(modules = [ApplicationModule::class, ViewModelModule::class])
 interface ApplicationComponent {
 
     fun inject(app: App)
