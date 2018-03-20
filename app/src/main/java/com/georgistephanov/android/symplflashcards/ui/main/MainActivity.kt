@@ -1,30 +1,28 @@
 package com.georgistephanov.android.symplflashcards.ui.main
 
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ListView
+import android.view.View
+import android.widget.Toast
 import com.georgistephanov.android.symplflashcards.App
 import com.georgistephanov.android.symplflashcards.R
-import com.georgistephanov.android.symplflashcards.data.room.entities.Deck
-import com.georgistephanov.android.symplflashcards.data.room.entities.DeckAndCards
 import com.georgistephanov.android.symplflashcards.ui.base.BaseActivity
+import com.georgistephanov.android.symplflashcards.ui.deck.DeckActivity
 import com.georgistephanov.android.symplflashcards.ui.newdeck.NewDeckActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.content_main.*
 import org.jetbrains.anko.find
 
-class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-    private val model: MainViewModel by lazy { ViewModelProviders.of(this, (application as App).viewModelFactory).get(MainViewModel::class.java) }
-
-    private val mainListView by lazy { find<ListView>(R.id.main_list) }
+class MainActivity : BaseActivity(),
+        NavigationView.OnNavigationItemSelectedListener,
+        DeckListFragment.OnListFragmentInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,15 +30,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         toolbar.title = resources.getString(R.string.app_name)
 
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener { _ ->
             startActivity(Intent(this, NewDeckActivity::class.java))
         }
-
-        model.decks.observe(this, Observer<List<DeckAndCards>> {
-            it?.let {
-                mainListView.adapter = MainListAdapter(this, it)
-            }
-        })
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -95,5 +87,13 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onListFragmentInteraction(view: View) {
+        when (view.id) {
+            R.id.btn_deck_play -> Toast.makeText(this, "Play", Toast.LENGTH_SHORT).show()
+            R.id.btn_deck_settings -> Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show()
+            else -> startActivity(Intent(this, DeckActivity::class.java))
+        }
     }
 }
