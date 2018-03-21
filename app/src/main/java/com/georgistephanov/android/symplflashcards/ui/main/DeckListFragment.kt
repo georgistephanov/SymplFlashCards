@@ -57,6 +57,6 @@ class DeckListFragment : Fragment() {
      * activity.
      */
     interface OnListFragmentInteractionListener {
-        fun onListFragmentInteraction(view: View)
+        fun onListFragmentInteraction(view: View, deckName: String)
     }
 }

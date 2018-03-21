@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.georgistephanov.android.symplflashcards.R
+import com.georgistephanov.android.symplflashcards.data.room.entities.Deck
 import com.georgistephanov.android.symplflashcards.data.room.entities.DeckAndCards
 import org.jetbrains.anko.find
 
@@ -36,7 +37,10 @@ class DeckRecyclerViewAdapter(
             )
 
             row.setOnClickListener {
-                fragmentInteractionListener?.onListFragmentInteraction(it)
+                if (holder.dataItem != null && fragmentInteractionListener != null) {
+                    fragmentInteractionListener
+                            .onListFragmentInteraction(it, (holder.dataItem as DeckAndCards).deck.name)
+                }
             }
         }
     }

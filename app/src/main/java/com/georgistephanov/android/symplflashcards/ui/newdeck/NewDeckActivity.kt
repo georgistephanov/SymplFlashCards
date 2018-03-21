@@ -20,11 +20,11 @@ class NewDeckActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_deck)
 
+        setSupportActionBar(toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
+            title = resources.getString(R.string.new_deck_activity)
         }
-
-        toolbar.title = resources.getString(R.string.new_deck_activity)
     }
 
     fun onCreateDeckClick(@Suppress("UNUSED_PARAMETER") view: View) {

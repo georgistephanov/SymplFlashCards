@@ -1,24 +1,20 @@
 package com.georgistephanov.android.symplflashcards.ui.main
 
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import com.georgistephanov.android.symplflashcards.App
 import com.georgistephanov.android.symplflashcards.R
 import com.georgistephanov.android.symplflashcards.ui.base.BaseActivity
 import com.georgistephanov.android.symplflashcards.ui.deck.DeckActivity
 import com.georgistephanov.android.symplflashcards.ui.newdeck.NewDeckActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import org.jetbrains.anko.find
 
 class MainActivity : BaseActivity(),
         NavigationView.OnNavigationItemSelectedListener,
@@ -27,6 +23,7 @@ class MainActivity : BaseActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(toolbar)
 
         toolbar.title = resources.getString(R.string.app_name)
 
@@ -89,11 +86,16 @@ class MainActivity : BaseActivity(),
         return true
     }
 
-    override fun onListFragmentInteraction(view: View) {
+    override fun onListFragmentInteraction(view: View, deckName: String) {
         when (view.id) {
             R.id.btn_deck_play -> Toast.makeText(this, "Play", Toast.LENGTH_SHORT).show()
             R.id.btn_deck_settings -> Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show()
-            else -> startActivity(Intent(this, DeckActivity::class.java))
+            else -> {
+                val intent = Intent(this, DeckActivity::class.java)
+                intent.putExtra("deckName", deckName)
+
+                startActivity(intent)
+            }
         }
     }
 }

@@ -10,40 +10,34 @@
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:orientation="vertical"
-		android:paddingBottom="8dp"
-		android:paddingEnd="16dp"
-		android:paddingStart="16dp"
-		android:paddingTop="8dp">
+		android:layout_marginTop="@dimen/activity_vertical_margin"
+		android:layout_marginEnd="@dimen/activity_horizontal_margin"
+		android:layout_marginStart="@dimen/activity_horizontal_margin"
+		android:layout_marginBottom="@dimen/activity_vertical_margin"
+		android:orientation="vertical">
 
 		<EditText
 			android:id="@+id/et_deck_name"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="8dp"
+			android:layout_marginTop="@dimen/et_vertical_margin"
 			android:background="@drawable/white_box_edit_text"
 			android:hint="Deck name"
 			android:inputType="textPersonName"
-			android:padding="8dp" />
+			android:padding="@dimen/et_padding" />
 
 		<Button
 			android:id="@+id/btn_create_deck"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="12dp"
+			android:layout_marginTop="@dimen/btn_margin_vertical"
 			android:text="Create Deck"
 			android:onClick="onCreateDeckClick" />
 
 		<TextView
+			style="@style/InfoText"
 			android:id="@+id/text_new_deck_info"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginBottom="8dp"
-			android:layout_marginTop="12dp"
-			android:background="@drawable/white_box_message"
-			android:padding="16dp"
-			android:text="Create a stack and add flashcards to it.\nAfter that you can study the stack."
-			android:textSize="16sp" />
+			android:text="Create a stack and add flashcards to it.\nAfter that you can study the stack." />
 
 	</LinearLayout>
 
