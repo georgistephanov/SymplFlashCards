@@ -4,6 +4,8 @@
 	<color name="colorPrimaryDark">#3E516B</color>
 	<color name="colorAccent">#FF4081</color>
 
-	<color name="adapter_main_light">#E3F2FD</color>
-	<color name="adapter_main_dark">#D1EAFC</color>
+	<color name="adapterMainLight">#E3F2FD</color>
+	<color name="adapterMainDark">#D1EAFC</color>
+	<color name="cardFront">#64FFDA</color>
+	<color name="cardBack">#FF6480</color>
 </resources>
