@@ -8,4 +8,5 @@
 	<color name="adapterMainDark">#D1EAFC</color>
 	<color name="cardFront">#64FFDA</color>
 	<color name="cardBack">#FF6480</color>
+	<color name="cardButton">#CCC</color>
 </resources>
