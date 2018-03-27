@@ -6,7 +6,6 @@
 
 	<color name="adapterMainLight">#E3F2FD</color>
 	<color name="adapterMainDark">#D1EAFC</color>
-	<color name="cardFront">#64FFDA</color>
-	<color name="cardBack">#FF6480</color>
+	<color name="cardTint">#64FFDA</color>
 	<color name="cardButton">#CCC</color>
 </resources>

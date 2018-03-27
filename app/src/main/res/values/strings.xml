@@ -17,4 +17,14 @@
 		<item quantity="one">%d flashcard</item>
 		<item quantity="other">%d flashcards</item>
 	</plurals>
+
+	<!-- Cards -->
+	<string name="card_image_view_desc">Flash card</string>
+	<string name="card_info_front">Front</string>
+	<string name="card_info_back">Back</string>
+	<string name="card_button_delete_desc">Delete the card</string>
+	<string name="card_button_rotate_desc">Flip the card</string>
+	<string name="card_front_default_text">Example front side of a flashcard</string>
+	<string name="card_back_default_text">Example back side of a flashcard</string>
+
 </resources>

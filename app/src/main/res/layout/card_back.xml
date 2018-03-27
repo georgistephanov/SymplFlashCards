@@ -1,58 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:orientation="vertical"
-	android:paddingLeft="60dp"
-	android:paddingRight="60dp"
-	android:paddingTop="80dp"
-	android:paddingBottom="80dp">
+	style="@style/CardLayout">
 
 	<ImageView
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:contentDescription="Flash card"
-		android:tint="@color/cardBack"
-		android:src="@drawable/card_rectangle" />
+		style="@style/CardImageView"
+		android:contentDescription="@string/card_image_view_desc"/>
 
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:orientation="vertical">
+		android:orientation="vertical"
+		android:padding="@dimen/card_padding">
 
-		<ImageButton
-			android:layout_width="wrap_content"
-			android:layout_height="0dp"
-			android:layout_weight="1"
-			android:layout_gravity="end"
-			android:background="@android:color/transparent"
-			android:contentDescription="Delete the card"
-			android:padding="@dimen/card_padding"
-			android:src="@drawable/ic_close" />
-
-		<com.georgistephanov.android.symplflashcards.ui.AutoResizeTextView
+		<RelativeLayout
 			android:layout_width="match_parent"
 			android:layout_height="0dp"
-			android:layout_weight="5"
-			android:gravity="center"
-			android:maxLines="10"
-			android:paddingStart="10dp"
-			android:paddingEnd="10dp"
-			android:text="Back is whatever back is. Back is whatever back is."
-			android:textColor="@android:color/black"
-			android:textSize="40sp"
-			android:onClick="onCardTextClick" />
+			android:layout_weight="1"
+			android:orientation="horizontal">
+
+			<TextView
+				style="@style/CardTextInfo"
+				android:text="@string/card_info_back" />
+
+			<ImageButton
+				style="@style/CardDeleteButton"
+				android:contentDescription="@string/card_button_delete_desc" />
+
+		</RelativeLayout>
+
+		<com.georgistephanov.android.symplflashcards.ui.AutoResizeTextView
+			style="@style/CardTextContent"
+			android:text="@string/card_back_default_text" />
 
 		<ImageButton
-			android:layout_width="wrap_content"
-			android:layout_height="0dp"
-			android:layout_weight="1"
-			android:layout_gravity="end"
-			android:background="@android:color/transparent"
-			android:contentDescription="Rotate"
-			android:padding="@dimen/card_padding"
-			android:src="@drawable/ic_rotate_card"
-			android:onClick="onRotateCardClick"/>
+			style="@style/CardRotateButton"
+			android:contentDescription="@string/card_button_rotate_desc"/>
 
 	</LinearLayout>
 

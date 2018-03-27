@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<style name="CardLayout">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">match_parent</item>
+		<item name="android:orientation">vertical</item>
+		<item name="android:paddingTop">@dimen/card_layout_padding_vertical</item>
+		<item name="android:paddingBottom">@dimen/card_layout_padding_vertical</item>
+		<item name="android:paddingStart">@dimen/card_layout_padding_horizontal</item>
+		<item name="android:paddingEnd">@dimen/card_layout_padding_horizontal</item>
+	</style>
+
+	<style name="CardImageView">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">match_parent</item>
+		<item name="android:contentDescription">@string/card_image_view_desc</item>
+		<item name="android:src">@drawable/card_rectangle</item>
+		<item name="android:tint">@color/cardTint</item>
+	</style>
+
+	<style name="CardTextInfo">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_alignParentStart">true</item>
+		<item name="android:layout_centerVertical">true</item>
+		<item name="android:fontFamily">sans-serif-light</item>
+		<item name="android:textSize">@dimen/card_text_info_size</item>
+	</style>
+
+	<style name="CardTextContent">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">0dp</item>
+		<item name="android:layout_weight">5</item>
+		<item name="android:fontFamily">sans-serif-light</item>
+		<item name="android:gravity">center</item>
+		<item name="android:maxLines">10</item>
+		<item name="android:onClick">onCardTextClick</item>
+		<item name="android:textColor">@android:color/black</item>
+		<item name="android:textSize">@dimen/card_max_text_size</item>
+	</style>
+
+	<style name="CardImageButton">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:background">@android:color/transparent</item>
+	</style>
+
+	<style name="CardDeleteButton" parent="CardImageButton">
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_alignParentEnd">true</item>
+		<item name="android:layout_centerVertical">true</item>
+		<item name="android:src">@drawable/ic_close</item>
+	</style>
+
+	<style name="CardRotateButton" parent="CardImageButton">
+		<item name="android:layout_height">0dp</item>
+		<item name="android:layout_weight">1</item>
+		<item name="android:layout_gravity">end</item>
+		<item name="android:src">@drawable/ic_rotate_card</item>
+		<item name="android:onClick">onRotateCardClick</item>
+	</style>
+
+</resources>

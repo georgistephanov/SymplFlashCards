@@ -18,7 +18,12 @@
 	<dimen name="text_num_cards_text_size">15sp</dimen>
 
 	<!-- Cards -->
-	<dimen name="card_padding">16dp</dimen>
+	<dimen name="card_corner_radius">10dp</dimen>
+	<dimen name="card_layout_padding_vertical">80dp</dimen>
+	<dimen name="card_layout_padding_horizontal">50dp</dimen>
+	<dimen name="card_padding">12dp</dimen>
+	<dimen name="card_text_info_size">30sp</dimen>
+	<dimen name="card_max_text_size">38sp</dimen>
 
 	<!-- Info text box -->
 	<dimen name="text_info_vertical_margin">12dp</dimen>
