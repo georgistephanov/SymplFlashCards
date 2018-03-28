@@ -12,9 +12,9 @@ import android.arch.persistence.room.PrimaryKey
                 onDelete = CASCADE)])
 data class FlashCard(@PrimaryKey(autoGenerate = true)
                      val _id: Int = 0,
-                     val front: String,
-                     val back: String,
+                     var front: String,
+                     var back: String,
                      val label: String,
-                     val color: Int,
+                     var color: Int,
                      @ColumnInfo(name = "deck_name")
                      val deckName: String)

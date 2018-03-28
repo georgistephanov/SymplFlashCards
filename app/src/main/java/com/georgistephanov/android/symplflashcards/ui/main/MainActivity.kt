@@ -27,7 +27,7 @@ class MainActivity : BaseActivity(),
 
         toolbar.title = resources.getString(R.string.app_name)
 
-        fab.setOnClickListener { _ ->
+        fab_main.setOnClickListener { _ ->
             startActivity(Intent(this, NewDeckActivity::class.java))
         }
 

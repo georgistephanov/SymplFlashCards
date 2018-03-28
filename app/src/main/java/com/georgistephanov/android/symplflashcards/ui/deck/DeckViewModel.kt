@@ -18,37 +18,43 @@ class DeckViewModel @Inject constructor(@ApplicationContext val applicationConte
 
     private val dataManager = (applicationContext as App).component.getDataManager()
 
+    private lateinit var deckName: String
+
     lateinit var deck: LiveData<DeckAndCards>
     val card: MutableLiveData<FlashCard> = MutableLiveData()
 
-    fun setDeckName(deckName: String) {
-        async {
-            deck = dataManager.getDeck(deckName)
+    fun setDeckName(name: String) {
+        deckName = name
+        deck = dataManager.getDeck(deckName)
+    }
 
-            if (deck.value!!.cards.isEmpty()) {
-                dataManager.insertFlashCard( FlashCard(
+    fun createCard() {
+        async {
+            dataManager.insertFlashCard(
+                    FlashCard(
                         front = applicationContext.resources.getString(R.string.card_front_default_text),
                         back = applicationContext.resources.getString(R.string.card_back_default_text),
                         label = "",
                         color = ContextCompat.getColor(applicationContext, R.color.cardTint),
-                        deckName = deckName )
-                )
-            }
-
-            card.value = deck.value!!.cards[0]
+                        deckName = deckName
+                    )
+            )
         }
     }
 
-    fun updateCard(front: String = "", back: String = "") {
-        dataManager.updateFlashCard(
-                FlashCard(
-                        card.value!!._id,
-                        if (front.isNotEmpty()) front else card.value!!.front,
-                        if (back.isNotEmpty()) back else card.value!!.back,
-                        card.value!!.label,
-                        card.value!!.color,
-                        card.value!!.deckName
-                )
-        )
+    fun updateCard(_id: Int, front: String = "", back: String = "") {
+        async {
+            val card = dataManager.getFlashCard(_id)
+
+            card ?: return@async
+
+            if (front.isNotEmpty()) {
+                card.front = front
+            } else if (back.isNotEmpty()) {
+                card.back = back
+            }
+
+            dataManager.updateFlashCard(card)
+        }
     }
 }

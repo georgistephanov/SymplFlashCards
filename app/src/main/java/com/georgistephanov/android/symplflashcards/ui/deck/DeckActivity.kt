@@ -11,17 +11,21 @@ import android.support.v4.content.ContextCompat
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import com.georgistephanov.android.symplflashcards.App
 import com.georgistephanov.android.symplflashcards.R
+import com.georgistephanov.android.symplflashcards.data.room.entities.DeckAndCards
 import com.georgistephanov.android.symplflashcards.data.room.entities.FlashCard
 import com.georgistephanov.android.symplflashcards.ui.AutoResizeTextView
 import com.georgistephanov.android.symplflashcards.ui.base.BaseActivity
+import kotlinx.android.synthetic.main.activity_deck.*
 import org.jetbrains.anko.find
 
 class DeckActivity : BaseActivity() {
@@ -32,8 +36,8 @@ class DeckActivity : BaseActivity() {
                 .get(DeckViewModel::class.java)
     }
 
-    private val cardFrontLayout by lazy { find<View>(R.id.card_front) }
-    private val cardBackLayout by lazy { find<View>(R.id.card_back) }
+    private lateinit var cardFrontLayout: View
+    private lateinit var cardBackLayout: View
     private val setRightOut by lazy { AnimatorInflater.loadAnimator(this, R.animator.card_rotation_right_out) }
     private val setLeftIn by lazy { AnimatorInflater.loadAnimator(this, R.animator.card_rotation_left_in) }
     private val setRightIn by lazy { AnimatorInflater.loadAnimator(this, R.animator.card_rotation_right_in) }
@@ -52,20 +56,38 @@ class DeckActivity : BaseActivity() {
             title = deckName
         }
 
+        fab_deck.setOnClickListener { _ ->
+            if (!(::cardFrontLayout.isInitialized))
+                model.createCard()
+        }
+
         model.setDeckName(deckName)
-        model.card.observe(this as BaseActivity, Observer<FlashCard> { card ->
-            card?.let {
-                cardFrontLayout.find<TextView>(R.id.card_front).text = card.front
-                cardFrontLayout.find<TextView>(R.id.card_back).text = card.back
+        model.deck.observe(this as BaseActivity, Observer<DeckAndCards> { deck ->
+            deck?.let {
+                if (it.cards.isNotEmpty()) {
+
+                    if (!(::cardFrontLayout.isInitialized)) {
+                        cardFrontLayout = LayoutInflater.from(this).inflate(R.layout.card_front, null)
+                        cardBackLayout = LayoutInflater.from(this).inflate(R.layout.card_back, null)
+
+                        // Front to back animation
+                        setRightOut.setTarget(cardFrontLayout)
+                        setLeftIn.setTarget(cardBackLayout)
+                        // Back to front animation
+                        setRightIn.setTarget(cardBackLayout)
+                        setLeftOut.setTarget(cardFrontLayout)
+
+                        layout_deck.addView(cardBackLayout)
+                        layout_deck.addView(cardFrontLayout)
+
+                        cardFrontLayout.tag = it.cards[0]._id
+                    }
+
+                    cardFrontLayout.find<TextView>(R.id.front_content).text = it.cards[0].front
+                    cardBackLayout.find<TextView>(R.id.back_content).text = it.cards[0].back
+                }
             }
         })
-
-        // Front to back animation
-        setRightOut.setTarget(cardFrontLayout)
-        setLeftIn.setTarget(cardBackLayout)
-        // Back to front animation
-        setRightIn.setTarget(cardBackLayout)
-        setLeftOut.setTarget(cardFrontLayout)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -99,6 +121,7 @@ class DeckActivity : BaseActivity() {
 
     fun onCardTextClick(view: View) {
         val colorAccent = ContextCompat.getColor(this, R.color.colorAccent)
+        val cardId = cardFrontLayout.tag as Int
 
         val hint = TextView(this).apply {
             text = "Enter question, title, word..."
@@ -144,7 +167,11 @@ class DeckActivity : BaseActivity() {
             setView(dialogLayout)
 
             setPositiveButton("OK") { _, _ ->
-                (view as AutoResizeTextView).text = etInput.text.toString().trim()
+                if (isBack) {
+                    model.updateCard(cardId, back = etInput.text.toString().trim())
+                } else {
+                    model.updateCard(cardId, front = etInput.text.toString().trim())
+                }
             }
 
             create().apply {
@@ -177,6 +204,6 @@ class DeckActivity : BaseActivity() {
                 show()
             }
         }
-
     }
+
 }
