@@ -11,11 +11,15 @@ class AppDataManager @Inject constructor(private val appDbHelper: DbHelper) : Da
 
     override fun getFlashCard(id: Int): FlashCard? = appDbHelper.getFlashCard(id)
 
-    override fun getAllFlashCardsFromDeck(deckName: String): List<FlashCard>
+    override fun getAllFlashCardsFromDeck(deckName: String): LiveData<List<FlashCard>>
             = appDbHelper.getAllFlashCardsFromDeck(deckName)
 
     override fun insertFlashCard(flashCard: FlashCard) {
         appDbHelper.insertFlashCard(flashCard)
+    }
+
+    override fun updateFlashCard(flashCard: FlashCard) {
+        appDbHelper.updateFlashCard(flashCard)
     }
 
     override fun deleteFlashCard(flashCard: FlashCard) {
@@ -28,7 +32,7 @@ class AppDataManager @Inject constructor(private val appDbHelper: DbHelper) : Da
 
     override fun getAllDecks(): LiveData<List<DeckAndCards>> = appDbHelper.getAllDecks()
 
-    override fun getDeck(name: String): DeckAndCards? = appDbHelper.getDeck(name)
+    override fun getDeck(name: String): LiveData<DeckAndCards> = appDbHelper.getDeck(name)
 
     override fun insertDeck(deck: Deck) {
         appDbHelper.insertDeck(deck)

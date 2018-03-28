@@ -30,11 +30,15 @@ class AppDbHelper @Inject constructor(@ApplicationContext context: Context) : Db
     override fun getFlashCard(id: Int) : FlashCard?
             = flashCardDao.getFlashCard(id)
 
-    override fun getAllFlashCardsFromDeck(deckName: String): List<FlashCard>
+    override fun getAllFlashCardsFromDeck(deckName: String): LiveData<List<FlashCard>>
             = flashCardDao.getAllFlashCardsFromDeck(deckName)
 
     override fun insertFlashCard(flashCard: FlashCard) {
         flashCardDao.insert(flashCard)
+    }
+
+    override fun updateFlashCard(flashCard: FlashCard) {
+        flashCardDao.update(flashCard)
     }
 
     override fun deleteFlashCard(flashCard: FlashCard) {
@@ -47,7 +51,7 @@ class AppDbHelper @Inject constructor(@ApplicationContext context: Context) : Db
 
     override fun getAllDecks(): LiveData<List<DeckAndCards>> = deckDao.getDecks()
 
-    override fun getDeck(name: String) : DeckAndCards? = deckDao.getDeck(name)
+    override fun getDeck(name: String) : LiveData<DeckAndCards> = deckDao.getDeck(name)
 
     override fun insertDeck(deck: Deck) {
         deckDao.insert(deck)

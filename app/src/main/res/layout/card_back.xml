@@ -29,8 +29,7 @@
 		</RelativeLayout>
 
 		<com.georgistephanov.android.symplflashcards.ui.AutoResizeTextView
-			style="@style/CardTextContent"
-			android:text="@string/card_back_default_text" />
+			style="@style/CardTextContent" />
 
 		<ImageButton
 			style="@style/CardRotateButton"

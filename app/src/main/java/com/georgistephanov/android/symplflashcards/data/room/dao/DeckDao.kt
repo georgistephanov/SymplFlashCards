@@ -15,7 +15,7 @@ interface DeckDao {
     fun getDecks() : LiveData<List<DeckAndCards>>
 
     @Query("SELECT * FROM Deck WHERE name = :name")
-    fun getDeck(name: String) : DeckAndCards?
+    fun getDeck(name: String) : LiveData<DeckAndCards>
 
     @Insert
     fun insert(deck: Deck)

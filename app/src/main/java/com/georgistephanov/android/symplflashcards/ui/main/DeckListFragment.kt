@@ -16,7 +16,12 @@ import com.georgistephanov.android.symplflashcards.ui.base.BaseActivity
 
 class DeckListFragment : Fragment() {
 
-    private val model by lazy { ViewModelProviders.of(activity, (activity.application as App).viewModelFactory).get(MainViewModel::class.java) }
+    private val model by lazy {
+        ViewModelProviders
+                .of(activity, (activity.application as App).viewModelFactory)
+                .get(MainViewModel::class.java)
+    }
+
     private var mListener: OnListFragmentInteractionListener? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

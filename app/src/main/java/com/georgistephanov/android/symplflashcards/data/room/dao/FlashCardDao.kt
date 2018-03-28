@@ -1,9 +1,7 @@
 package com.georgistephanov.android.symplflashcards.data.room.dao
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Delete
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.Query
+import android.arch.lifecycle.LiveData
+import android.arch.persistence.room.*
 import com.georgistephanov.android.symplflashcards.data.room.entities.FlashCard
 
 @Dao
@@ -13,7 +11,10 @@ interface FlashCardDao {
     fun getFlashCard(flashCardId: Int) : FlashCard?
 
     @Query("SELECT * FROM FlashCard WHERE deck_name=:deckName")
-    fun getAllFlashCardsFromDeck(deckName: String) : List<FlashCard>
+    fun getAllFlashCardsFromDeck(deckName: String) : LiveData<List<FlashCard>>
+
+    @Update
+    fun update(flashCard: FlashCard)
 
     @Insert
     fun insert(flashCard: FlashCard)

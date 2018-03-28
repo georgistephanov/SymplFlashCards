@@ -11,7 +11,7 @@ import android.arch.persistence.room.PrimaryKey
                 parentColumns = ["name"], childColumns = ["deck_name"],
                 onDelete = CASCADE)])
 data class FlashCard(@PrimaryKey(autoGenerate = true)
-                     val _id: Int,
+                     val _id: Int = 0,
                      val front: String,
                      val back: String,
                      val label: String,

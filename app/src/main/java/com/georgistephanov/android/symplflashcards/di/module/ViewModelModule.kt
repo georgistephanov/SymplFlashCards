@@ -6,6 +6,7 @@ import dagger.Module
 import android.arch.lifecycle.ViewModelProvider
 import com.georgistephanov.android.symplflashcards.di.ViewModelKey
 import com.georgistephanov.android.symplflashcards.ui.base.ViewModelFactory
+import com.georgistephanov.android.symplflashcards.ui.deck.DeckViewModel
 import com.georgistephanov.android.symplflashcards.ui.main.MainViewModel
 import dagger.multibindings.IntoMap
 
@@ -18,4 +19,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MainViewModel::class)
     internal abstract fun bindMainViewModel(viewModel: MainViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DeckViewModel::class)
+    internal abstract fun bindDeckViewModel(viewModel: DeckViewModel): ViewModel
 }

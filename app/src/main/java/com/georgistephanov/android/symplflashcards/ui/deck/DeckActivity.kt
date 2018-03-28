@@ -2,7 +2,8 @@ package com.georgistephanov.android.symplflashcards.ui.deck
 
 import android.animation.AnimatorInflater
 import android.app.AlertDialog
-import android.content.DialogInterface
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
@@ -13,19 +14,23 @@ import android.text.TextWatcher
 import android.view.Menu
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.georgistephanov.android.symplflashcards.App
 import com.georgistephanov.android.symplflashcards.R
+import com.georgistephanov.android.symplflashcards.data.room.entities.FlashCard
 import com.georgistephanov.android.symplflashcards.ui.AutoResizeTextView
 import com.georgistephanov.android.symplflashcards.ui.base.BaseActivity
 import org.jetbrains.anko.find
-import org.jetbrains.anko.margin
-import org.jetbrains.anko.padding
-import org.jetbrains.anko.sdk25.coroutines.textChangedListener
 
 class DeckActivity : BaseActivity() {
+
+    private val model by lazy {
+        ViewModelProviders
+                .of(this, (application as App).viewModelFactory)
+                .get(DeckViewModel::class.java)
+    }
 
     private val cardFrontLayout by lazy { find<View>(R.id.card_front) }
     private val cardBackLayout by lazy { find<View>(R.id.card_back) }
@@ -33,17 +38,27 @@ class DeckActivity : BaseActivity() {
     private val setLeftIn by lazy { AnimatorInflater.loadAnimator(this, R.animator.card_rotation_left_in) }
     private val setRightIn by lazy { AnimatorInflater.loadAnimator(this, R.animator.card_rotation_right_in) }
     private val setLeftOut by lazy { AnimatorInflater.loadAnimator(this, R.animator.card_rotation_left_out) }
+
     private var isBack = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_deck)
 
+        val deckName = intent.extras.get("deckName") as String
         setSupportActionBar(toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
-            title = intent.extras.get("deckName") as String
+            title = deckName
         }
+
+        model.setDeckName(deckName)
+        model.card.observe(this as BaseActivity, Observer<FlashCard> { card ->
+            card?.let {
+                cardFrontLayout.find<TextView>(R.id.card_front).text = card.front
+                cardFrontLayout.find<TextView>(R.id.card_back).text = card.back
+            }
+        })
 
         // Front to back animation
         setRightOut.setTarget(cardFrontLayout)
