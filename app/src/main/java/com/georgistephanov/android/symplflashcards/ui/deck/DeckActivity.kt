@@ -18,11 +18,9 @@ import android.view.WindowManager
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import com.georgistephanov.android.symplflashcards.App
 import com.georgistephanov.android.symplflashcards.R
 import com.georgistephanov.android.symplflashcards.data.room.entities.DeckAndCards
-import com.georgistephanov.android.symplflashcards.data.room.entities.FlashCard
 import com.georgistephanov.android.symplflashcards.ui.AutoResizeTextView
 import com.georgistephanov.android.symplflashcards.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_deck.*
@@ -95,6 +93,7 @@ class DeckActivity : BaseActivity() {
         return true
     }
 
+    @Suppress("unused")
     fun onRotateCardClick(@Suppress("UNUSED_PARAMETER") view: View) {
         if (isBack) {
             cardFrontLayout.visibility = View.VISIBLE
@@ -119,12 +118,13 @@ class DeckActivity : BaseActivity() {
         isBack = !isBack
     }
 
+    @Suppress("unused")
     fun onCardTextClick(view: View) {
         val colorAccent = ContextCompat.getColor(this, R.color.colorAccent)
         val cardId = cardFrontLayout.tag as Int
 
         val hint = TextView(this).apply {
-            text = "Enter question, title, word..."
+            text = resources.getString(R.string.card_input_hint)
             setTextColor(colorAccent)
             setTypeface(typeface, Typeface.ITALIC)
             setPadding(
@@ -162,11 +162,11 @@ class DeckActivity : BaseActivity() {
         }
 
         AlertDialog.Builder(this).apply {
-            setTitle(if (isBack) "Back" else "Front")
+            setTitle(if (isBack) resources.getString(R.string.card_info_back) else resources.getString(R.string.card_info_front))
 
             setView(dialogLayout)
 
-            setPositiveButton("OK") { _, _ ->
+            setPositiveButton(resources.getString(R.string.card_input_positive_button)) { _, _ ->
                 if (isBack) {
                     model.updateCard(cardId, back = etInput.text.toString().trim())
                 } else {
@@ -189,7 +189,7 @@ class DeckActivity : BaseActivity() {
                         override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                             if (p0 != null && p0.trim().isEmpty()) {
                                 positiveButton.isEnabled = false
-                                positiveButton.setTextColor(ContextCompat.getColor(this@DeckActivity, R.color.material_grey_600))
+                                positiveButton.setTextColor(ContextCompat.getColor(this@DeckActivity, android.R.color.darker_gray))
                             } else if (!positiveButton.isEnabled) {
                                 positiveButton.isEnabled = true
                                 positiveButton.setTextColor(colorAccent)

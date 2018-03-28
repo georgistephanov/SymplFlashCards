@@ -17,15 +17,7 @@
 		<FrameLayout
 			android:id="@+id/layout_deck"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent">
-
-
-
-			<!--<include layout="@layout/card_back" android:id="@+id/card_back" />-->
-
-			<!--<include layout="@layout/card_front" android:id="@+id/card_front" />-->
-
-		</FrameLayout>
+			android:layout_height="match_parent" />
 
 		<android.support.design.widget.FloatingActionButton
 			android:id="@+id/fab_deck"

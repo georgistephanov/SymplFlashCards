@@ -22,7 +22,7 @@
 			android:layout_height="wrap_content"
 			android:layout_marginTop="@dimen/et_vertical_margin"
 			android:background="@drawable/white_box_edit_text"
-			android:hint="Deck name"
+			android:hint="@string/new_deck_name_hint"
 			android:inputType="textPersonName"
 			android:padding="@dimen/et_padding" />
 
@@ -31,13 +31,13 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="@dimen/btn_margin_vertical"
-			android:text="Create Deck"
+			android:text="@string/new_deck_btn_create"
 			android:onClick="onCreateDeckClick" />
 
 		<TextView
 			style="@style/InfoText"
 			android:id="@+id/text_new_deck_info"
-			android:text="Create a stack and add flashcards to it.\nAfter that you can study the stack." />
+			android:text="@string/new_deck_text_info" />
 
 	</LinearLayout>
 

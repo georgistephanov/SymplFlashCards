@@ -18,6 +18,15 @@
 		<item quantity="other">%d flashcards</item>
 	</plurals>
 
+	<!-- Main RecyclerView adapter -->
+	<string name="adapter_main_btn_settings_description">Settings</string>
+	<string name="adapter_main_btn_play_description">Start training</string>
+
+	<!-- New deck -->
+	<string name="new_deck_name_hint">Deck name</string>
+	<string name="new_deck_btn_create">Create Deck</string>
+	<string name="new_deck_text_info">Create a stack and add flashcards to it.\nAfter that you can study the stack.</string>
+
 	<!-- Cards -->
 	<string name="card_image_view_desc">Flash card</string>
 	<string name="card_info_front">Front</string>
@@ -26,5 +35,7 @@
 	<string name="card_button_rotate_desc">Flip the card</string>
 	<string name="card_front_default_text">Example front side of a flashcard</string>
 	<string name="card_back_default_text">Example back side of a flashcard</string>
+	<string name="card_input_hint">Enter question, title, word&#8230;</string>
+	<string name="card_input_positive_button">Apply</string>
 
 </resources>

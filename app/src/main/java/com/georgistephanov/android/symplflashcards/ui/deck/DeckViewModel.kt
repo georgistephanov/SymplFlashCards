@@ -1,7 +1,6 @@
 package com.georgistephanov.android.symplflashcards.ui.deck
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.content.Context
 import android.support.v4.content.ContextCompat
@@ -19,9 +18,7 @@ class DeckViewModel @Inject constructor(@ApplicationContext val applicationConte
     private val dataManager = (applicationContext as App).component.getDataManager()
 
     private lateinit var deckName: String
-
     lateinit var deck: LiveData<DeckAndCards>
-    val card: MutableLiveData<FlashCard> = MutableLiveData()
 
     fun setDeckName(name: String) {
         deckName = name
