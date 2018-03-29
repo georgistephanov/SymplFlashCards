@@ -14,8 +14,9 @@
 		android:layout_height="match_parent"
 		tools:context="com.georgistephanov.android.symplflashcards.ui.deck.DeckActivity">
 
-		<FrameLayout
-			android:id="@+id/layout_deck"
+		<fragment
+			android:name="com.georgistephanov.android.symplflashcards.ui.deck.DeckListFragment"
+			android:id="@+id/deck_fragment"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent" />
 

@@ -3,12 +3,11 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
-	android:name="com.georgistephanov.android.symplflashcards.ui.deck.DeckListFragment"
+	android:name="com.georgistephanov.android.symplflashcards.ui.main.MainListFragment"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:drawSelectorOnTop="true"
 	android:focusable="true"
-	android:orientation="horizontal"
-	app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-	tools:context="com.georgistephanov.android.symplflashcards.ui.deck.DeckListFragment"
-	tools:listitem="@layout/adapter_flash_card" />
+	app:layoutManager="LinearLayoutManager"
+	tools:context="com.georgistephanov.android.symplflashcards.ui.main.MainListFragment"
+	tools:listitem="@layout/adapter_item_main" />

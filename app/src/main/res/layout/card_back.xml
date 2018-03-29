@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	style="@style/CardLayout">
+	style="@style/CardLayout"
+	android:id="@+id/card_back">
 
 	<ImageView
 		style="@style/CardImageView"
@@ -24,6 +25,7 @@
 
 			<ImageButton
 				style="@style/CardDeleteButton"
+				android:id="@+id/btn_back_delete"
 				android:contentDescription="@string/card_button_delete_desc" />
 
 		</RelativeLayout>
@@ -34,6 +36,7 @@
 
 		<ImageButton
 			style="@style/CardRotateButton"
+			android:id="@+id/btn_back_rotate"
 			android:contentDescription="@string/card_button_rotate_desc"/>
 
 	</LinearLayout>

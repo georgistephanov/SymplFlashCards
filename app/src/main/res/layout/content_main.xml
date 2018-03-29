@@ -8,8 +8,8 @@
 	tools:context="com.georgistephanov.android.symplflashcards.ui.main.MainActivity">
 
 	<fragment
-		android:name="com.georgistephanov.android.symplflashcards.ui.main.DeckListFragment"
-		android:id="@+id/deck_fragment"
+		android:name="com.georgistephanov.android.symplflashcards.ui.main.MainListFragment"
+		android:id="@+id/main_fragment"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content" />
 

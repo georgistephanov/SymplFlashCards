@@ -14,7 +14,7 @@ import com.georgistephanov.android.symplflashcards.R
 import com.georgistephanov.android.symplflashcards.data.room.entities.DeckAndCards
 import com.georgistephanov.android.symplflashcards.ui.base.BaseActivity
 
-class DeckListFragment : Fragment() {
+class MainListFragment : Fragment() {
 
     private val model by lazy {
         ViewModelProviders
@@ -26,19 +26,18 @@ class DeckListFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val view = inflater.inflate(R.layout.fragment_deck_recyclerview, container, false)
+        val view = inflater.inflate(R.layout.fragment_main_recyclerview, container, false)
 
         if (view is RecyclerView) {
             model.decks.observe(activity as BaseActivity, Observer<List<DeckAndCards>> { deck ->
                 deck?.let {
-                    view.adapter = DeckRecyclerViewAdapter(this@DeckListFragment.context, it, mListener)
+                    view.adapter = MainRecyclerViewAdapter(this@MainListFragment.context, it, mListener)
                 }
             })
         }
 
         return view
     }
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : BaseActivity(),
         NavigationView.OnNavigationItemSelectedListener,
-        DeckListFragment.OnListFragmentInteractionListener {
+        MainListFragment.OnListFragmentInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -7,15 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.georgistephanov.android.symplflashcards.R
-import com.georgistephanov.android.symplflashcards.data.room.entities.Deck
 import com.georgistephanov.android.symplflashcards.data.room.entities.DeckAndCards
 import org.jetbrains.anko.find
 
-class DeckRecyclerViewAdapter(
+class MainRecyclerViewAdapter(
         val context: Context,
         val data: List<DeckAndCards>,
-        private val fragmentInteractionListener: DeckListFragment.OnListFragmentInteractionListener?
-    ) : RecyclerView.Adapter<DeckRecyclerViewAdapter.ViewHolder>() {
+        private val fragmentInteractionListener: MainListFragment.OnListFragmentInteractionListener?
+    ) : RecyclerView.Adapter<MainRecyclerViewAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -45,9 +44,7 @@ class DeckRecyclerViewAdapter(
         }
     }
 
-    override fun getItemCount(): Int {
-        return data.size
-    }
+    override fun getItemCount(): Int = data.size
 
     inner class ViewHolder(val row: View) : RecyclerView.ViewHolder(row) {
         var dataItem: DeckAndCards? = null
