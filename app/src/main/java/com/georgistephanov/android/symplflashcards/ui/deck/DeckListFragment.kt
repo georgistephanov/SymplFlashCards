@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import com.georgistephanov.android.symplflashcards.App
 import com.georgistephanov.android.symplflashcards.R
 import com.georgistephanov.android.symplflashcards.data.room.entities.DeckAndCards
+import com.georgistephanov.android.symplflashcards.data.room.entities.FlashCard
 import com.georgistephanov.android.symplflashcards.ui.base.BaseActivity
 
 class DeckListFragment : Fragment() {
@@ -33,7 +34,8 @@ class DeckListFragment : Fragment() {
         if (view is RecyclerView) {
             model.deck.observe(activity as BaseActivity, Observer<DeckAndCards> { deck ->
                 deck?.let {
-                    view.adapter = DeckRecyclerViewAdapter(this@DeckListFragment.context, it.cards, mListener)
+                    val cards: List<FlashCard> = it.cards.sortedByDescending { it._id }
+                    view.adapter = DeckRecyclerViewAdapter(this@DeckListFragment.context, cards, mListener)
                 }
             })
         }

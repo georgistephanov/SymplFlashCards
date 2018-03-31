@@ -41,6 +41,16 @@ class DeckRecyclerViewAdapter(
             frontContent.text = data[position].front
             backContent.text = data[position].back
 
+            // Apply additional start padding to the first element
+            // and additional end padding to the last element
+            if (position == 0) {
+                (cardLayout.layoutParams as ViewGroup.MarginLayoutParams).leftMargin =
+                        (context.resources.displayMetrics.density * 30).toInt()
+            } else if (position == data.size - 1) {
+                (cardLayout.layoutParams as ViewGroup.MarginLayoutParams).rightMargin =
+                        (context.resources.displayMetrics.density * 30).toInt()
+            }
+
             /* Content change button click */
             frontContent.onClick {
                 onCardContentClick(holder)

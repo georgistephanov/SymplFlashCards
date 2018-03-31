@@ -2,13 +2,13 @@
 <resources>
 
 	<style name="CardLayout">
-		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_width">@dimen/card_layout_width</item>
 		<item name="android:layout_height">match_parent</item>
 		<item name="android:orientation">vertical</item>
-		<item name="android:paddingTop">@dimen/card_layout_padding_vertical</item>
-		<item name="android:paddingBottom">@dimen/card_layout_padding_vertical</item>
-		<item name="android:layout_marginStart">@dimen/card_layout_padding_horizontal</item>
-		<item name="android:layout_marginEnd">@dimen/card_layout_padding_horizontal</item>
+		<item name="android:paddingTop">@dimen/card_layout_padding_top</item>
+		<item name="android:paddingBottom">@dimen/card_layout_padding_bottom</item>
+		<item name="android:layout_marginStart">@dimen/card_layout_margin_horizontal</item>
+		<item name="android:layout_marginEnd">@dimen/card_layout_margin_horizontal</item>
 	</style>
 
 	<style name="CardImageView">
