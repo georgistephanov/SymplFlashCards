@@ -4,7 +4,10 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Parcelable
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -22,8 +25,8 @@ class DeckListFragment : Fragment() {
                 .of(activity, (activity.application as App).viewModelFactory)
                 .get(DeckViewModel::class.java)
     }
-
     private var mListener: OnListFragmentInteractionListener? = null
+    private var lastNumberOfCards: Int = -1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -35,7 +38,26 @@ class DeckListFragment : Fragment() {
             model.deck.observe(activity as BaseActivity, Observer<DeckAndCards> { deck ->
                 deck?.let {
                     val cards: List<FlashCard> = it.cards.sortedByDescending { it._id }
-                    view.adapter = DeckRecyclerViewAdapter(this@DeckListFragment.context, cards, mListener)
+
+                    if (lastNumberOfCards == -1 || lastNumberOfCards >= deck.cards.size) {
+                        // Save the state of the RecyclerView
+                        val recyclerViewState: Parcelable = view.layoutManager.onSaveInstanceState()
+
+                        view.adapter = DeckRecyclerViewAdapter(this@DeckListFragment.context, cards, mListener)
+
+                        // Update the state of the newly created RecyclerView adapter
+                        view.layoutManager.onRestoreInstanceState(recyclerViewState)
+                    } else {
+                        // A cards has been added
+                        view.scrollToPosition(0)
+                        (view.adapter as DeckRecyclerViewAdapter).itemInserted(view.getChildAt(0))
+
+                        Handler().postDelayed({
+                            view.adapter = DeckRecyclerViewAdapter(this@DeckListFragment.context, cards, mListener)
+                        }, (view.adapter as DeckRecyclerViewAdapter).animationTime)
+                    }
+
+                    lastNumberOfCards = cards.size
                 }
             })
         }
@@ -65,7 +87,8 @@ class DeckListFragment : Fragment() {
      * activity.
      */
     interface OnListFragmentInteractionListener {
-        fun onListFragmentInteraction(cardId: Int, front: String = "", back: String = "")
+        fun onCardContentChanged(cardId: Int, front: String = "", back: String = "")
+        fun onCardDeleted(cardId: Int)
     }
 
 }

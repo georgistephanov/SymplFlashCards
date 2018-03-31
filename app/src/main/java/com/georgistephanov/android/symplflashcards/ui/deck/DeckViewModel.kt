@@ -39,9 +39,9 @@ class DeckViewModel @Inject constructor(@ApplicationContext val applicationConte
         }
     }
 
-    fun updateCard(_id: Int, front: String = "", back: String = "") {
+    fun updateCard(cardId: Int, front: String = "", back: String = "") {
         async {
-            val card = dataManager.getFlashCard(_id)
+            val card = dataManager.getFlashCard(cardId)
 
             card ?: return@async
 
@@ -52,6 +52,12 @@ class DeckViewModel @Inject constructor(@ApplicationContext val applicationConte
             }
 
             dataManager.updateFlashCard(card)
+        }
+    }
+
+    fun deleteCard(cardId: Int) {
+        async {
+            dataManager.deleteFlashCard(cardId)
         }
     }
 }

@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorInflater
 import android.app.AlertDialog
 import android.content.Context
+import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.os.Handler
 import android.support.v4.content.ContextCompat
@@ -26,6 +27,8 @@ class DeckRecyclerViewAdapter(
         val data: List<FlashCard>,
         private val fragmentInteractionListener: DeckListFragment.OnListFragmentInteractionListener?
     ) : RecyclerView.Adapter<DeckRecyclerViewAdapter.ViewHolder>() {
+
+    val animationTime = 300L
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeckRecyclerViewAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -79,7 +82,20 @@ class DeckRecyclerViewAdapter(
         }
     }
 
+    fun itemInserted(firstItem: View) {
+        firstItem.animate().apply {
+            xBy(firstItem.width.toFloat())
+            duration = animationTime
+            start()
+        }.withEndAction {
+            // Clear the start margin from the view
+            (firstItem.layoutParams as ViewGroup.MarginLayoutParams).leftMargin =
+                    context.resources.getDimension(R.dimen.card_layout_margin_horizontal).toInt()
+        }
+    }
+
     override fun getItemCount(): Int = data.size
+
 
     private fun onRotateClick(holder: ViewHolder) {
         holder.apply {
@@ -108,7 +124,15 @@ class DeckRecyclerViewAdapter(
     }
 
     private fun onDeleteClick(holder: ViewHolder) {
+        holder.cardLayout.animate().apply {
+            yBy(context.resources.displayMetrics.heightPixels.toFloat())
+            duration = animationTime
+            start()
+        }
 
+        Handler().postDelayed({
+            fragmentInteractionListener?.onCardDeleted(holder.dataItem._id)
+        }, animationTime)
     }
 
     private fun onCardContentClick(holder: ViewHolder) {
@@ -163,10 +187,10 @@ class DeckRecyclerViewAdapter(
 
             setPositiveButton(context.resources.getString(R.string.card_input_positive_button)) { _, _ ->
                 if (holder.isFront) {
-                    fragmentInteractionListener?.onListFragmentInteraction(holder.dataItem._id,
+                    fragmentInteractionListener?.onCardContentChanged(holder.dataItem._id,
                             front = etInput.text.toString().trim())
                 } else {
-                    fragmentInteractionListener?.onListFragmentInteraction(holder.dataItem._id,
+                    fragmentInteractionListener?.onCardContentChanged(holder.dataItem._id,
                             back = etInput.text.toString().trim())
                 }
             }
