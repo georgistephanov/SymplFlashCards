@@ -1,22 +1,10 @@
 package com.georgistephanov.android.symplflashcards.ui.deck
 
-import android.app.AlertDialog
 import android.arch.lifecycle.ViewModelProviders
-import android.graphics.Typeface
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.text.Editable
-import android.text.InputType
-import android.text.TextWatcher
 import android.view.Menu
-import android.view.View
-import android.view.WindowManager
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
 import com.georgistephanov.android.symplflashcards.App
 import com.georgistephanov.android.symplflashcards.R
-import com.georgistephanov.android.symplflashcards.ui.AutoResizeTextView
 import com.georgistephanov.android.symplflashcards.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_deck.*
 
@@ -40,6 +28,9 @@ class DeckActivity : BaseActivity(), DeckListFragment.OnListFragmentInteractionL
         }
 
         fab_deck.setOnClickListener { _ ->
+            if (model.isAddCardButtonLocked) {
+                return@setOnClickListener
+            }
             model.createCard()
         }
     }

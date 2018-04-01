@@ -4,7 +4,6 @@ import android.animation.Animator
 import android.animation.AnimatorInflater
 import android.app.AlertDialog
 import android.content.Context
-import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.os.Handler
 import android.support.v4.content.ContextCompat
@@ -28,6 +27,7 @@ class DeckRecyclerViewAdapter(
         private val fragmentInteractionListener: DeckListFragment.OnListFragmentInteractionListener?
     ) : RecyclerView.Adapter<DeckRecyclerViewAdapter.ViewHolder>() {
 
+    private var recyclerView: RecyclerView? = null
     val animationTime = 300L
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeckRecyclerViewAdapter.ViewHolder {
@@ -82,20 +82,34 @@ class DeckRecyclerViewAdapter(
         }
     }
 
-    fun itemInserted(firstItem: View) {
-        firstItem.animate().apply {
-            xBy(firstItem.width.toFloat())
-            duration = animationTime
-            start()
-        }.withEndAction {
-            // Clear the start margin from the view
-            (firstItem.layoutParams as ViewGroup.MarginLayoutParams).leftMargin =
-                    context.resources.getDimension(R.dimen.card_layout_margin_horizontal).toInt()
-        }
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView?) {
+        this.recyclerView = recyclerView
     }
 
     override fun getItemCount(): Int = data.size
 
+    fun itemInserted(firstItem: View) {
+        recyclerView?.let {
+            val itemWidth = firstItem.width.toFloat()
+
+            it.animate().apply {
+                xBy(itemWidth)
+                duration = animationTime
+                start()
+            }
+
+            // Bring back the RecyclerView to its initial position
+            // Gives 10 milliseconds offset to ensure that the initial animation had finished
+            Handler().postDelayed({
+                // Bring back the RecyclerView to its initial position
+                it.animate().apply {
+                    xBy(-itemWidth)
+                    duration = 0
+                    start()
+                }
+            }, animationTime + 5)
+        }
+    }
 
     private fun onRotateClick(holder: ViewHolder) {
         holder.apply {

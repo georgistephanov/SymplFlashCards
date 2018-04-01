@@ -20,12 +20,16 @@ class DeckViewModel @Inject constructor(@ApplicationContext val applicationConte
     private lateinit var deckName: String
     lateinit var deck: LiveData<DeckAndCards>
 
+    var isAddCardButtonLocked = false
+
     fun setDeckName(name: String) {
         deckName = name
         deck = dataManager.getDeck(deckName)
     }
 
     fun createCard() {
+        isAddCardButtonLocked = true
+
         async {
             dataManager.insertFlashCard(
                     FlashCard(

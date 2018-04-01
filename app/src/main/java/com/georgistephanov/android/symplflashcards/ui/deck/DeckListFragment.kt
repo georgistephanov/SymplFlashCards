@@ -38,26 +38,40 @@ class DeckListFragment : Fragment() {
             model.deck.observe(activity as BaseActivity, Observer<DeckAndCards> { deck ->
                 deck?.let {
                     val cards: List<FlashCard> = it.cards.sortedByDescending { it._id }
+                    val newAdapter = DeckRecyclerViewAdapter(this@DeckListFragment.context, cards, mListener)
 
-                    if (lastNumberOfCards == -1 || lastNumberOfCards >= deck.cards.size) {
-                        // Save the state of the RecyclerView
-                        val recyclerViewState: Parcelable = view.layoutManager.onSaveInstanceState()
+                    when {
+                        lastNumberOfCards == -1 -> {
+                            // Update the adapter and unlock the button
+                            view.adapter = newAdapter
+                            model.isAddCardButtonLocked = false
+                        }
+                        lastNumberOfCards >= deck.cards.size -> {
+                            // Save the state of the RecyclerView
+                            val recyclerViewState: Parcelable = view.layoutManager.onSaveInstanceState()
 
-                        view.adapter = DeckRecyclerViewAdapter(this@DeckListFragment.context, cards, mListener)
+                            // Update the adapter and unlock the button
+                            view.adapter = newAdapter
+                            model.isAddCardButtonLocked = false
 
-                        // Update the state of the newly created RecyclerView adapter
-                        view.layoutManager.onRestoreInstanceState(recyclerViewState)
-                    } else {
-                        // A cards has been added
-                        view.scrollToPosition(0)
-                        (view.adapter as DeckRecyclerViewAdapter).itemInserted(view.getChildAt(0))
+                            // Update the state of the newly created RecyclerView adapter
+                            view.layoutManager.onRestoreInstanceState(recyclerViewState)
+                        }
+                        else -> {
+                            // A cards has been added
+                            view.scrollToPosition(0)
+                            (view.adapter as DeckRecyclerViewAdapter).itemInserted(view.getChildAt(0))
 
-                        Handler().postDelayed({
-                            view.adapter = DeckRecyclerViewAdapter(this@DeckListFragment.context, cards, mListener)
-                        }, (view.adapter as DeckRecyclerViewAdapter).animationTime)
+                            Handler().postDelayed({
+                                // Update the adapter and unlock the button
+                                view.adapter = newAdapter
+                                model.isAddCardButtonLocked = false
+
+                            }, (view.adapter as DeckRecyclerViewAdapter).animationTime)
+                        }
                     }
 
-                    lastNumberOfCards = cards.size
+                    lastNumberOfCards = if (cards.isEmpty()) -1 else cards.size
                 }
             })
         }
